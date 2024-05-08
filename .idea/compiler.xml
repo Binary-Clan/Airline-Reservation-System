@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="frontend-service" />
+        <module name="flight-information-service" />
+        <module name="reservation-service" />
+        <module name="reservation-viewer-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="flight-information-service" target="19" />
+      <module name="frontend-service" target="19" />
+      <module name="reservation-service" target="19" />
+      <module name="reservation-viewer-service" target="19" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="flight-information-service" options="-parameters" />
+      <module name="frontend-service" options="-parameters" />
+      <module name="reservation-service" options="-parameters" />
+      <module name="reservation-viewer-service" options="-parameters" />
+    </option>
+  </component>
+</project>

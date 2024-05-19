@@ -18,40 +18,65 @@ public class ReservationService {
 //    }
 
     public void createReservation(ReservationDTO reservationDTO) {
-        Reservation reservation = new Reservation();
-        reservation.setCustomerId(reservationDTO.getCustomerId());
-        reservation.setFlightId(reservationDTO.getFlightId());
-        reservation.setSeatId(reservationDTO.getSeatId());
-        reservation.setPaymentId(reservationDTO.getPaymentId());
-        this.reservationRepository.save(reservation);
+        try {
+            Reservation reservation = new Reservation();
+            reservation.setCustomerId(reservationDTO.getCustomerId());
+            reservation.setFlightId(reservationDTO.getFlightId());
+            reservation.setSeatId(reservationDTO.getSeatId());
+            reservation.setPaymentId(reservationDTO.getPaymentId());
+            this.reservationRepository.save(reservation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<ReservationDTO> getReservations() {
-        List<Reservation> reservations = this.reservationRepository.findAll();
-        return reservations.stream().map((reservation) -> {
-            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId());
-        }).collect(Collectors.toList());
+        try {
+            List<Reservation> reservations = this.reservationRepository.findAll();
+            return reservations.stream().map((reservation) -> {
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId());
+            }).collect(Collectors.toList());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public ReservationDTO getReservation(Integer id) {
-        Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
-            return new RuntimeException("Reservation not found");
-        });
-        return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId());
+        try {
+            Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
+                return new RuntimeException("Reservation not found");
+            });
+            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void deleteReservation(Integer id) {
-        this.reservationRepository.deleteById(id);
+        try{
+            this.reservationRepository.deleteById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateReservation(Integer id, ReservationDTO reservationDTO) {
-        Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
-            return new RuntimeException("Reservation not found");
-        });
-        reservation.setCustomerId(reservationDTO.getCustomerId());
-        reservation.setFlightId(reservationDTO.getFlightId());
-        reservation.setSeatId(reservationDTO.getSeatId());
-        reservation.setPaymentId(reservationDTO.getPaymentId());
-        this.reservationRepository.save(reservation);
+        try{
+            Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
+                return new RuntimeException("Reservation not found");
+            });
+            reservation.setCustomerId(reservationDTO.getCustomerId());
+            reservation.setFlightId(reservationDTO.getFlightId());
+            reservation.setSeatId(reservationDTO.getSeatId());
+            reservation.setPaymentId(reservationDTO.getPaymentId());
+            this.reservationRepository.save(reservation);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -12,31 +12,30 @@ import java.util.List;
 @RequestMapping("/airline_reservation/api")
 public class ReservationController {
 
-    @Autowired
     ReservationService reservationService;
 
-     @GetMapping("/Reservations")
+     @GetMapping("/reservations")
      public List<ReservationDTO> getAllReservations() {
          return reservationService.getReservations();
      }
 
-     @PostMapping("/Reservations")
-    public void createReservation(ReservationDTO reservationDTO) {
+     @PostMapping("/reservations")
+    public void createReservation(@RequestBody ReservationDTO reservationDTO) {
         reservationService.createReservation(reservationDTO);
     }
 
-    @GetMapping("/Reservations/{id}")
-    public ReservationDTO getReservation(Integer id) {
+    @GetMapping("/reservations/{id}")
+    public ReservationDTO getReservation(@PathVariable Integer id) {
         return reservationService.getReservation(id);
     }
 
-    @PutMapping("/Reservations/{id}")
-    public void updateReservation(Integer id, ReservationDTO reservationDTO) {
+    @PutMapping("/reservations/{id}")
+    public void updateReservation(@RequestBody Integer id, ReservationDTO reservationDTO) {
         reservationService.updateReservation(id, reservationDTO);
     }
 
-    @DeleteMapping("/Reservations/{id}")
-    public void deleteReservation(Integer id) {
+    @DeleteMapping("/reservations/{id}")
+    public void deleteReservation(@PathVariable Integer id) {
         reservationService.deleteReservation(id);
     }
 }

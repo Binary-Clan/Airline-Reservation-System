@@ -31,7 +31,7 @@ public class UserAuthServiceImpl implements UserAuthService{
     public ResponseEntity<?> createUserAuth(UserAuthDTO userAuthDTO) {
         UserAuth userAuth = new UserAuth();
         userAuth.setUserName(userAuthDTO.getUserName());
-        userAuth.setPassword(userAuth.getPassword());
+        userAuth.setPassword(userAuthDTO.getPassword());
         return ResponseEntity.ok().body(new ApiResponse(true, HttpStatus.OK.value(), userAuthRepository.save(userAuth)));
     }
 

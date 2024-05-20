@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservationViewer {
+@Data
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,7 +20,6 @@ public class ReservationViewer {
     private Integer flightId;
     private Integer seatId;
     private Integer paymentId;
-    private Integer reservationId;
     @Column(updatable = false)
     private LocalDate createdDate;
     private LocalTime createdAt;
@@ -30,4 +28,5 @@ public class ReservationViewer {
         this.createdDate = LocalDate.now();
         this.createdAt = LocalTime.now().withNano(0);
     }
+
 }

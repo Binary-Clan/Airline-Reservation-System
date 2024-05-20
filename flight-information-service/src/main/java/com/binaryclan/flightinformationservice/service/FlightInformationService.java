@@ -1,8 +1,6 @@
 package com.binaryclan.flightinformationservice.service;
 
 import com.binaryclan.flightinformationservice.dto.FlightInformationDto;
-import com.binaryclan.flightinformationservice.model.FlightInformation;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

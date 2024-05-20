@@ -5,8 +5,8 @@ import com.binaryclan.flightinformationservice.dto.FlightScheduleSeatInformation
 import com.binaryclan.flightinformationservice.mapper.FlightScheduleSeatInformationMapper;
 import com.binaryclan.flightinformationservice.model.FlightSchedule;
 import com.binaryclan.flightinformationservice.model.FlightScheduleSeatInformation;
-import com.binaryclan.flightinformationservice.repository.FlightScheduleRepository;
 import com.binaryclan.flightinformationservice.repository.FlightScheduleSeatInformationRepository;
+import com.binaryclan.flightinformationservice.repository.FlightScheduleRepository;
 import com.binaryclan.flightinformationservice.service.FlightScheduleSeatInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,5 +72,26 @@ public class FlightScheduleSeatInformationServiceImpl implements FlightScheduleS
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Seat information does not exist!"));
         seatInformationRepository.deleteById(id);
+    }
+
+    @Override
+    public List<FlightScheduleSeatInformationOutputDto> getSeatInformationByFlightScheduleId(Long flightScheduleId) {
+        return seatInformationRepository.findByFlightScheduleId(flightScheduleId).stream()
+                .map(FlightScheduleSeatInformationMapper::mapToFlightScheduleSeatInformationOutputDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FlightScheduleSeatInformationOutputDto> getSeatInformationByBookingStatus(Boolean bookingStatus) {
+        return seatInformationRepository.findByBookingStatus(bookingStatus).stream()
+                .map(FlightScheduleSeatInformationMapper::mapToFlightScheduleSeatInformationOutputDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FlightScheduleSeatInformationOutputDto> getSeatInformationBySeatType(String seatType) {
+        return seatInformationRepository.findBySeatType(seatType).stream()
+                .map(FlightScheduleSeatInformationMapper::mapToFlightScheduleSeatInformationOutputDto)
+                .collect(Collectors.toList());
     }
 }

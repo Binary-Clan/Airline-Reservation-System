@@ -11,5 +11,5 @@ public class FlightScheduleSeatInformationInputDto {
     private Long id;
     private String seatType;
     private Boolean bookingStatus;
-    private Long flightScheduleId; // Only the ID is provided here
+    private Long flightScheduleId;
 }

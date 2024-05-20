@@ -1,21 +1,46 @@
+//package com.binaryclan.flightinformationservice.service;
+//
+//import com.binaryclan.flightinformationservice.dto.FlightInformationDto;
+//import com.binaryclan.flightinformationservice.dto.FlightScheduleDto;
+//import com.binaryclan.flightinformationservice.dto.FlightScheduleInputDto;
+//import com.binaryclan.flightinformationservice.dto.FlightScheduleOutputDto;
+//
+//import java.util.List;
+//
+//public interface FlightScheduleService {
+//
+//    FlightScheduleDto addFlightSchedule(FlightScheduleDto flightScheduleDto);
+//
+//    FlightScheduleDto getFlightScheduleById(Long id);
+//
+//    List<FlightScheduleDto> getAllFlightSchedules();
+//
+//    FlightScheduleDto updateFlightSchedule(Long id, FlightScheduleDto flightScheduleDto);
+//
+//    void deleteFlightSchedule(Long id);
+//
+//    List<FlightScheduleDto> getAllFlightSchedulesByFlightId(Long flightId);
+//}
+
+
 package com.binaryclan.flightinformationservice.service;
 
-import com.binaryclan.flightinformationservice.dto.FlightInformationDto;
-import com.binaryclan.flightinformationservice.dto.FlightScheduleDto;
+import com.binaryclan.flightinformationservice.dto.FlightScheduleInputDto;
+import com.binaryclan.flightinformationservice.dto.FlightScheduleOutputDto;
 
 import java.util.List;
 
 public interface FlightScheduleService {
 
-    FlightScheduleDto addFlightSchedule(FlightScheduleDto flightScheduleDto);
+    FlightScheduleOutputDto addFlightSchedule(FlightScheduleInputDto flightScheduleInputDto);
 
-    FlightScheduleDto getFlightScheduleById(Long id);
+    FlightScheduleOutputDto getFlightScheduleById(Long id);
 
-    List<FlightScheduleDto> getAllFlightSchedules();
+    List<FlightScheduleOutputDto> getAllFlightSchedules();
 
-    FlightScheduleDto updateFlightSchedule(Long id, FlightScheduleDto flightScheduleDto);
+    FlightScheduleOutputDto updateFlightSchedule(Long id, FlightScheduleInputDto flightScheduleInputDto);
 
     void deleteFlightSchedule(Long id);
 
-    List<FlightScheduleDto> getAllFlightSchedulesByFlightId(Long flightId);
+    List<FlightScheduleOutputDto> getAllFlightSchedulesByFlightId(Long flightId);
 }

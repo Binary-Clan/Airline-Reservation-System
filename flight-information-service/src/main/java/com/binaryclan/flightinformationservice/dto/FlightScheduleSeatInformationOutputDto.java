@@ -12,5 +12,5 @@ public class FlightScheduleSeatInformationOutputDto {
     private Long id;
     private String seatType;
     private Boolean bookingStatus;
-    private FlightSchedule flightSchedule; // Full object
+    private FlightSchedule flightSchedule;
 }

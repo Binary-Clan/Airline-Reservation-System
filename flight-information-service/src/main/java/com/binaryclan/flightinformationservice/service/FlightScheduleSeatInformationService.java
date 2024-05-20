@@ -11,4 +11,7 @@ public interface FlightScheduleSeatInformationService {
     List<FlightScheduleSeatInformationOutputDto> getAllSeatInformation();
     FlightScheduleSeatInformationOutputDto updateSeatInformation(Long id, FlightScheduleSeatInformationInputDto inputDto);
     void deleteSeatInformation(Long id);
+    List<FlightScheduleSeatInformationOutputDto> getSeatInformationByFlightScheduleId(Long flightScheduleId);
+    List<FlightScheduleSeatInformationOutputDto> getSeatInformationByBookingStatus(Boolean bookingStatus);
+    List<FlightScheduleSeatInformationOutputDto> getSeatInformationBySeatType(String seatType);
 }

@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlightScheduleSeatInformationDto {
+public class FlightScheduleSeatInformationOutputDto {
     private Long id;
-//    private String seatId;
     private String seatType;
     private Boolean bookingStatus;
-    private FlightSchedule flightSchedule;
+    private FlightSchedule flightSchedule; // Full object
 }

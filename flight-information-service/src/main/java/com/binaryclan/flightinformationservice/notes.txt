@@ -1,0 +1,2 @@
+when add schedule, include only flight id. not flight object.
+check with seat info commented API

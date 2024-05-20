@@ -6,7 +6,7 @@ import com.binaryclan.flightinformationservice.model.FlightSchedule;
 
 public class FlightScheduleMapper {
 
-    public static FlightSchedule mapToFlightInformation(FlightScheduleDto flightScheduleDto) {
+    public static FlightSchedule mapToFlightSchedule(FlightScheduleDto flightScheduleDto) {
         FlightSchedule flightSchedule = new FlightSchedule(
                 flightScheduleDto.getId(),
                 flightScheduleDto.getStatus(),
@@ -20,7 +20,7 @@ public class FlightScheduleMapper {
         return flightSchedule;
     }
 
-    public static FlightScheduleDto mapToFlightInformationDto(FlightSchedule flightSchedule) {
+    public static FlightScheduleDto mapToFlightScheduleDto(FlightSchedule flightSchedule) {
         FlightScheduleDto flightScheduleDto = new FlightScheduleDto(
                 flightSchedule.getId(),
                 flightSchedule.getStatus(),

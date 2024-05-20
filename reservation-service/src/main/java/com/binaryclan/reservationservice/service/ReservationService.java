@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReservationService {
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository ;
 
-//    public ReservationService(ReservationRepository reservationRepository) {
-//        this.reservationRepository = reservationRepository;
-//    }
+    public ReservationService(ReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
 
     public void createReservation(ReservationDTO reservationDTO) {
         try {
@@ -34,7 +34,7 @@ public class ReservationService {
         try {
             List<Reservation> reservations = this.reservationRepository.findAll();
             return reservations.stream().map((reservation) -> {
-                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         }
         catch (Exception e) {
@@ -49,7 +49,7 @@ public class ReservationService {
             Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
                 return new RuntimeException("Reservation not found");
             });
-            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId());
+            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(),reservation.getCreatedDate(), reservation.getCreatedAt());
         } catch (Exception e) {
             e.printStackTrace();
             return null;

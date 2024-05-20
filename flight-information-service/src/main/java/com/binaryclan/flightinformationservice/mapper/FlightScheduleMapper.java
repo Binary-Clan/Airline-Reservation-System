@@ -21,7 +21,8 @@ public class FlightScheduleMapper {
         return new FlightSchedule(
                 flightScheduleInputDto.getId(),
                 flightScheduleInputDto.getStatus(),
-                flightScheduleInputDto.getDate(),
+                flightScheduleInputDto.getArrivalDate(),
+                flightScheduleInputDto.getDepartureDate(),
                 flightScheduleInputDto.getDepartureTime(),
                 flightScheduleInputDto.getArrivalTime(),
                 flightScheduleInputDto.getStartAirport(),
@@ -34,7 +35,8 @@ public class FlightScheduleMapper {
         return new FlightScheduleOutputDto(
                 flightSchedule.getId(),
                 flightSchedule.getStatus(),
-                flightSchedule.getDate(),
+                flightSchedule.getArrivalDate(),
+                flightSchedule.getDepartureDate(),
                 flightSchedule.getDepartureTime(),
                 flightSchedule.getArrivalTime(),
                 flightSchedule.getStartAirport(),

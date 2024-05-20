@@ -17,7 +17,8 @@ public class FlightSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
-    private LocalDate date;
+    private LocalDate arrivalDate;
+    private LocalDate departureDate;
     private LocalTime departureTime;
     private LocalTime arrivalTime;
     private String startAirport;

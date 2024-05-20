@@ -14,7 +14,8 @@ import java.time.LocalTime;
 public class FlightScheduleOutputDto {
     private Long id;
     private String status;
-    private LocalDate date;
+    private LocalDate arrivalDate;
+    private LocalDate departureDate;
     private LocalTime departureTime;
     private LocalTime arrivalTime;
     private String startAirport;

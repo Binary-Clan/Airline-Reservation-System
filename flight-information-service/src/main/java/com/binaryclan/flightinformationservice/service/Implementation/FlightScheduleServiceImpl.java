@@ -55,7 +55,8 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
                 .orElseThrow(() -> new RuntimeException("Flight schedule does not exist!"));
 
         flightSchedule.setStatus(flightScheduleInputDto.getStatus());
-        flightSchedule.setDate(flightScheduleInputDto.getDate());
+        flightSchedule.setArrivalDate(flightScheduleInputDto.getArrivalDate());
+        flightSchedule.setArrivalDate(flightScheduleInputDto.getDepartureDate());
         flightSchedule.setDepartureTime(flightScheduleInputDto.getDepartureTime());
         flightSchedule.setArrivalTime(flightScheduleInputDto.getArrivalTime());
         flightSchedule.setStartAirport(flightScheduleInputDto.getStartAirport());

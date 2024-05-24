@@ -1,8 +1,10 @@
 import { Stack, Button } from "@mui/material"
 import logo from "../../assets/logo.png"
+import { Link, useNavigate } from "react-router-dom"
 
 const Navbar = () => {
   const navBarItems = []
+  const navigate = useNavigate()
 
   return (
     <>
@@ -11,10 +13,12 @@ const Navbar = () => {
         justifyContent='space-between'
         alignItems='center'
         spacing={2}
-        padding={4}
+        paddingX={4}
+        paddingY={2}
       >
-        <img width={300} src={logo} alt='' srcset='' />
-
+        <Link to={"/"}>
+          <img width={300} src={logo} alt='' srcset='' />
+        </Link>
         <Stack
           direction='row'
           justifyContent='flex-end'

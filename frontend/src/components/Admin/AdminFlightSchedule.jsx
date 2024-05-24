@@ -2,8 +2,11 @@ import React from "react"
 import AdminFlightScheduleTable from "./AdminFlightScheduleTable"
 import { Stack, Typography, Button } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
+import { useNavigate } from "react-router-dom"
 
 const AdminFlightSchedule = () => {
+  const navigate = useNavigate()
+
   return (
     <>
       <Stack spacing={2}>
@@ -14,7 +17,12 @@ const AdminFlightSchedule = () => {
           spacing={2}
         >
           <Typography variant='h4'>Flight Schedule</Typography>
-          <Button startIcon={<AddIcon />} variant='contained' color='primary'>
+          <Button
+            onClick={() => navigate("/admin/addSchedule")}
+            startIcon={<AddIcon />}
+            variant='contained'
+            color='primary'
+          >
             Add New Schedule
           </Button>
         </Stack>

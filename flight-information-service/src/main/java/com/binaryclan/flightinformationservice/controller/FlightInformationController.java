@@ -15,7 +15,7 @@ public class FlightInformationController {
     @Autowired
     private FlightInformationService flightInformationService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<FlightInformationDto> addFlight(@RequestBody FlightInformationDto flightInformationDto) {
         FlightInformationDto createdFlight = flightInformationService.addFlight(flightInformationDto);
         return ResponseEntity.ok(createdFlight);
@@ -27,7 +27,7 @@ public class FlightInformationController {
         return ResponseEntity.ok(flightInformationDto);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<FlightInformationDto>> getAllFlights() {
         List<FlightInformationDto> flights = flightInformationService.getAllFlights();
         return ResponseEntity.ok(flights);

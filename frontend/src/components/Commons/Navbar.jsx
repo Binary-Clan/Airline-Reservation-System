@@ -26,6 +26,9 @@ const Navbar = () => {
           spacing={2}
         >
           <Button variant='contained' color='primary'>
+            Checkout your seat
+          </Button>
+          <Button variant='contained' color='primary'>
             Login
           </Button>
           <Button variant='contained' color='primary'>

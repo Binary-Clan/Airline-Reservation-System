@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/service-registry-/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -9,6 +12,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="frontend-service" />
         <module name="flight-information-service" />
+        <module name="service-registry" />
         <module name="reservation-service" />
         <module name="reservation-viewer-service" />
       </profile>
@@ -20,6 +24,7 @@
       <module name="frontend-service" options="-parameters" />
       <module name="reservation-service" options="-parameters" />
       <module name="reservation-viewer-service" options="-parameters" />
+      <module name="service-registry" options="-parameters" />
     </option>
   </component>
 </project>

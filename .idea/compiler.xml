@@ -13,12 +13,6 @@
         <module name="reservation-viewer-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="flight-information-service" target="19" />
-      <module name="frontend-service" target="19" />
-      <module name="reservation-service" target="19" />
-      <module name="reservation-viewer-service" target="19" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

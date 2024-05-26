@@ -1,12 +1,14 @@
 package com.binaryclan.reservationviewerservice.repository;
 
+import com.binaryclan.reservationviewerservice.model.Reservation;
 import com.binaryclan.reservationviewerservice.model.ReservationViewer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ReservationViewerRepository extends JpaRepository<ReservationViewer, Integer> {
-    List<ReservationViewer> findByCustomerId(Integer customerId);
+//public interface ReservationViewerRepository extends JpaRepository<ReservationViewer, Integer> {
+public interface ReservationViewerRepository extends JpaRepository<Reservation, Integer> {
 
-    List<ReservationViewer> findByFlightId(Integer flightId);
+    List<Reservation> findByCustomerId(Integer customerId);
+    List<Reservation> findByFlightId(Integer flightId);
 }

@@ -13,7 +13,7 @@ export const useGetFlights = () => useQuery({
 
 export const useGetFlight = (id) => useQuery({
     queryKey: ["flights", id],
-    queryFn: apiClient.get(id),
+    queryFn: () => apiClient.get(id),
 })
 
 export const useAddFlight = () => {

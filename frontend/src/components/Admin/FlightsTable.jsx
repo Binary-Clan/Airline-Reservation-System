@@ -14,11 +14,11 @@ import VisibilityIcon from "@mui/icons-material/Visibility"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useGetFlights } from "../../hooks/flight"
+import { useNavigate } from "react-router-dom"
 
 const FlightsTable = () => {
   const { data: flights, isLoading } = useGetFlights()
-  console.log("flights", flights)
-
+  const navigate = useNavigate()
   const columns = useMemo(
     () => [
       {
@@ -132,12 +132,15 @@ const FlightsTable = () => {
         id: "actions",
         header: "Actions",
         size: 150,
-        Cell: ({ cell }) => (
+        Cell: ({ row }) => (
           <Box display='flex' flexDirection='row' gap={1}>
             <IconButton color='primary'>
               <VisibilityIcon />
             </IconButton>
-            <IconButton color='primary'>
+            <IconButton
+              onClick={() => navigate(`/admin/editFlight/${row.original.id}`)}
+              color='primary'
+            >
               <EditIcon />
             </IconButton>
             <IconButton color='error'>

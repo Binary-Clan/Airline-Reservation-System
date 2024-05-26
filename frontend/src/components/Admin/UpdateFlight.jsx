@@ -2,34 +2,49 @@ import * as React from "react"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import {
-  Autocomplete,
   Button,
+  CircularProgress,
   Grid,
   MenuItem,
   TextField,
   Typography,
 } from "@mui/material"
-import AddIcon from "@mui/icons-material/Add"
-import { useAddFlight, useGetFlight, useUpdateFlight } from "../../hooks/flight"
+import SaveIcon from "@mui/icons-material/Save"
+import { useGetFlight, useUpdateFlight } from "../../hooks/flight"
 import toast from "react-hot-toast"
 import { useNavigate, useParams } from "react-router-dom"
 
 const flightTypeOptions = ["Local", "Commercial", "Seaways", "Private"]
 const seatTypeOptions = ["Economy", "Business"]
 
-export default function AddFlight() {
-  const [airline, setAirline] = React.useState(null)
-  const [flightName, setFlightName] = React.useState(null)
-  const [capacity, setCapacity] = React.useState(null)
-  const [flightType, setFlightType] = React.useState(null)
-  const [seatType, setSeatType] = React.useState(null)
-  const [maxWeightForPassenger, setMaxWeightForPassenger] = React.useState(null)
+export default function UpdateFlight() {
+  const { flightId } = useParams()
   const navigate = useNavigate()
 
-  const { mutate: addFlightMutation } = useAddFlight()
+  const { data: flightData, isLoading } = useGetFlight(flightId)
+  const { mutate: updateFlightMutation } = useUpdateFlight()
 
-  const handleAddFlight = () => {
-    const newFlight = {
+  const [airline, setAirline] = React.useState("")
+  const [flightName, setFlightName] = React.useState("")
+  const [capacity, setCapacity] = React.useState("")
+  const [flightType, setFlightType] = React.useState("")
+  const [seatType, setSeatType] = React.useState("")
+  const [maxWeightForPassenger, setMaxWeightForPassenger] = React.useState("")
+
+  React.useEffect(() => {
+    if (flightData) {
+      console.log("inside use effect")
+      setAirline(flightData.airlineService)
+      setFlightName(flightData.flightName)
+      setCapacity(flightData.capacity.toString())
+      setFlightType(flightData.flightType)
+      setSeatType(flightData.seatType)
+      setMaxWeightForPassenger(flightData.maximumWeightForPassenger.toString())
+    }
+  }, [flightData])
+
+  const handleUpdateFlight = () => {
+    const updatedFlight = {
       airlineService: airline,
       flightName: flightName,
       capacity: parseInt(capacity, 10),
@@ -38,39 +53,34 @@ export default function AddFlight() {
       maximumWeightForPassenger: parseFloat(maxWeightForPassenger),
     }
 
-    addFlightMutation(newFlight, {
-      onSuccess: () => {
-        toast("✅ Flight added successfully")
-        setAirline(null)
-        setFlightName("")
-        setCapacity("")
-        setFlightType(null)
-        setSeatType(null)
-        setMaxWeightForPassenger("")
-        navigate("/admin/manageFlights")
-      },
-      onError: (error) => {
-        toast("😵 Error adding flight: " + error.message)
-      },
-    })
+    updateFlightMutation(
+      { id: flightId, updatedFlight },
+      {
+        onSuccess: () => {
+          toast("✅ Flight updated successfully")
+          navigate("/admin/manageFlights")
+        },
+        onError: (error) => {
+          toast("😵 Error updating flight: " + error.message)
+        },
+      }
+    )
   }
+
+  if (isLoading) return <CircularProgress />
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography sx={{ marginBottom: 2 }} variant='h4'>
-            Add New Flight
+            Update Flight
           </Typography>
-          <Autocomplete
+          <TextField
             fullWidth
-            options={["ABC", "CDF"] /* Your flight options here */}
-            getOptionLabel={(option) => option}
+            label='Select Airline Service'
             value={airline}
-            onChange={(event, newValue) => setAirline(newValue)}
-            renderInput={(params) => (
-              <TextField {...params} label='Select Airline Service' />
-            )}
+            onChange={(event) => setAirline(event.target.value)}
           />
         </Grid>
         <Grid item xs={6}>
@@ -131,10 +141,10 @@ export default function AddFlight() {
           <Button
             variant='contained'
             color='primary'
-            onClick={handleAddFlight}
-            startIcon={<AddIcon />}
+            onClick={handleUpdateFlight}
+            startIcon={<SaveIcon />}
           >
-            Add New Flight
+            Update Flight
           </Button>
         </Grid>
       </Grid>

@@ -3,6 +3,8 @@ package com.binaryclan.reservationservice.service;
 import com.binaryclan.reservationservice.dto.ReservationDTO;
 import com.binaryclan.reservationservice.model.Reservation;
 import com.binaryclan.reservationservice.repository.ReservationRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,66 +18,86 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
-    public void createReservation(ReservationDTO reservationDTO) {
+    public ResponseEntity<ReservationDTO> createReservation(ReservationDTO reservationDTO) {
         try {
             Reservation reservation = new Reservation();
             reservation.setCustomerId(reservationDTO.getCustomerId());
             reservation.setFlightId(reservationDTO.getFlightId());
             reservation.setSeatId(reservationDTO.getSeatId());
             reservation.setPaymentId(reservationDTO.getPaymentId());
-            this.reservationRepository.save(reservation);
+            Reservation savedItem = this.reservationRepository.save(reservation);
+            return ResponseEntity.ok(new ReservationDTO(savedItem.getId(),
+                    savedItem.getCustomerId(), savedItem.getFlightId(),
+                    savedItem.getSeatId(), savedItem.getPaymentId(),
+                    savedItem.getCreatedDate(), savedItem.getCreatedAt()));
+
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    public List<ReservationDTO> getReservations() {
+    public ResponseEntity<List<ReservationDTO>> getReservations() {
         try {
             List<Reservation> reservations = this.reservationRepository.findAll();
-            return reservations.stream().map((reservation) -> {
+            return ResponseEntity.ok(reservations.stream().map((reservation) -> {
                 return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
-            }).collect(Collectors.toList());
+            }).collect(Collectors.toList()));
         }
         catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
     }
 
-    public ReservationDTO getReservation(Integer id) {
+    public ResponseEntity<ReservationDTO> getReservation(Integer id) {
         try {
             Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
                 return new RuntimeException("Reservation not found");
             });
-            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(),reservation.getCreatedDate(), reservation.getCreatedAt());
+            return ResponseEntity.ok(new ReservationDTO(
+                    reservation.getId(), reservation.getCustomerId(),
+                    reservation.getFlightId(), reservation.getSeatId(),
+                    reservation.getPaymentId(), reservation.getCreatedDate(),
+                    reservation.getCreatedAt()));
+//            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(),reservation.getCreatedDate(), reservation.getCreatedAt());
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    public void deleteReservation(Integer id) {
+    public ResponseEntity<String> deleteReservation(Integer id) {
         try{
             this.reservationRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Reservation deleted successfully");
         }catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    public void updateReservation(Integer id, ReservationDTO reservationDTO) {
+    public ResponseEntity<ReservationDTO> updateReservation(Integer id, ReservationDTO reservationDTO) {
         try{
-            Reservation reservation = (Reservation)this.reservationRepository.findById(id).orElseThrow(() -> {
-                return new RuntimeException("Reservation not found");
-            });
-            reservation.setCustomerId(reservationDTO.getCustomerId());
-            reservation.setFlightId(reservationDTO.getFlightId());
-            reservation.setSeatId(reservationDTO.getSeatId());
-            reservation.setPaymentId(reservationDTO.getPaymentId());
-            this.reservationRepository.save(reservation);
+            return this.reservationRepository.findById(id)
+                    .map(reservation -> {
+                        reservation.setCustomerId(reservationDTO.getCustomerId());
+                        reservation.setFlightId(reservationDTO.getFlightId());
+                        reservation.setSeatId(reservationDTO.getSeatId());
+                        reservation.setPaymentId(reservationDTO.getPaymentId());
+                        Reservation savedItem = this.reservationRepository.save(reservation);
+                        return ResponseEntity.ok(new ReservationDTO(savedItem.getId(),
+                                savedItem.getCustomerId(), savedItem.getFlightId(),
+                                savedItem.getSeatId(), savedItem.getPaymentId(),
+                                savedItem.getCreatedDate(), savedItem.getCreatedAt()));
+                    })
+                    .orElseGet(() -> {
+                        return ResponseEntity.notFound().build();
+                    });
         }catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 }

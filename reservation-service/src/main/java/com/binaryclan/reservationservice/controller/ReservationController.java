@@ -2,6 +2,7 @@ package com.binaryclan.reservationservice.controller;
 
 import com.binaryclan.reservationservice.dto.ReservationDTO;
 import com.binaryclan.reservationservice.service.ReservationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,27 +19,27 @@ public class ReservationController {
     }
 
     @GetMapping
-     public List<ReservationDTO> getAllReservations() {
+     public ResponseEntity<List<ReservationDTO>> getAllReservations() {
          return reservationService.getReservations();
      }
 
      @PostMapping
-    public void createReservation(@RequestBody ReservationDTO reservationDTO) {
-        reservationService.createReservation(reservationDTO);
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO) {
+        return reservationService.createReservation(reservationDTO);
     }
 
     @GetMapping(path = "{id}")
-    public ReservationDTO getReservation(@PathVariable Integer id) {
+    public ResponseEntity<ReservationDTO> getReservation(@PathVariable Integer id) {
         return reservationService.getReservation(id);
     }
 
     @PutMapping(path = "{id}")
-    public void updateReservation(@PathVariable Integer id, @RequestBody ReservationDTO reservationDTO) {
-        reservationService.updateReservation(id, reservationDTO);
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable Integer id, @RequestBody ReservationDTO reservationDTO) {
+        return reservationService.updateReservation(id, reservationDTO);
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteReservation(@PathVariable Integer id) {
-        reservationService.deleteReservation(id);
+    public ResponseEntity<String> deleteReservation(@PathVariable Integer id) {
+        return reservationService.deleteReservation(id);
     }
 }

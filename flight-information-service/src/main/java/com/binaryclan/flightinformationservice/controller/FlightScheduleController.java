@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/flight-schedules")
+@RequestMapping("/airline_reservation/api/flight-schedules")
 public class FlightScheduleController {
 
     @Autowired
     private FlightScheduleService flightScheduleService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<FlightScheduleOutputDto> createFlightSchedule(@RequestBody FlightScheduleInputDto flightScheduleInputDto) {
         FlightScheduleOutputDto createdSchedule = flightScheduleService.addFlightSchedule(flightScheduleInputDto);
         return ResponseEntity.ok(createdSchedule);
@@ -28,7 +28,7 @@ public class FlightScheduleController {
         return ResponseEntity.ok(flightScheduleOutputDto);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<FlightScheduleOutputDto>> getAllFlightSchedules() {
         List<FlightScheduleOutputDto> flightSchedules = flightScheduleService.getAllFlightSchedules();
         return ResponseEntity.ok(flightSchedules);

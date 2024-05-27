@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/airline_reservation/api/view-reservations")
+@RequestMapping("/airline_reservation/api/view-reservations")
 /**
 change the api url after creating the gateway abd front end integration.
 in the front end the reservation table will update in both air-line-reservation and air-line-reservation databases.
 then the reservation-viewr can acces the reservation table from the air-line-reservation database.
 so that we need to change the database properties in the application.properties file. also **/
 
-@RequestMapping("/airline_reservation/api/reservations")
+//@RequestMapping("/airline_reservation/api/reservations")
 
 public class ReservationViewerController {
 

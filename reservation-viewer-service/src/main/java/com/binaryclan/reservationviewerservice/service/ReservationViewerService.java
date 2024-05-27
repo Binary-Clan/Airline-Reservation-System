@@ -18,11 +18,11 @@ public class ReservationViewerService {
         this.reservationViewerRepository = reservationViewerRepository;
     }
 
-    public List<ReservationViewerDTO> getReservations() {
+    public List<ReservationDTO> getReservations() {
         try {
             List<Reservation> reservations = this.reservationViewerRepository.findAll();
             return reservations.stream().map((reservation) -> {
-                return new ReservationViewerDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -32,21 +32,22 @@ public class ReservationViewerService {
 
     public ReservationDTO getReservation(Integer id) {
         try {
-            Reservation reservation = this.reservationViewerRepository.findById(id).orElseThrow(() -> {
+            Reservation reservation = (Reservation)this.reservationViewerRepository.findById(id).orElseThrow(() -> {
                 return new RuntimeException("Reservation not found");
             });
-            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(),reservation.getCreatedDate(), reservation.getCreatedAt());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public List<ReservationViewerDTO> getReservationsByCustomerId(Integer customerId){
+
+    public List<ReservationDTO> getReservationsByCustomerId(Integer customerId){
         try {
             List<Reservation> reservations = this.reservationViewerRepository.findByCustomerId(customerId);
             return reservations.stream().map((reservation) -> {
-                return new ReservationViewerDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,16 +55,55 @@ public class ReservationViewerService {
         }
     }
 
-    public List<ReservationViewerDTO> getReservationsByFlightId(Integer flightId){
+    public List<ReservationDTO> getReservationsByFlightId(Integer flightId){
         try {
             List<Reservation> reservations = this.reservationViewerRepository.findByFlightId(flightId);
             return reservations.stream().map((reservation) -> {
-                return new ReservationViewerDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    public void createReservation(ReservationDTO reservationDTO) {
+        try {
+            Reservation reservation = new Reservation();
+            reservation.setCustomerId(reservationDTO.getCustomerId());
+            reservation.setFlightId(reservationDTO.getFlightId());
+            reservation.setSeatId(reservationDTO.getSeatId());
+            reservation.setPaymentId(reservationDTO.getPaymentId());
+            this.reservationViewerRepository.save(reservation);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void deleteReservation(Integer id) {
+        try{
+            this.reservationViewerRepository.deleteById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateReservation(Integer id, ReservationDTO reservationDTO) {
+        try{
+            Reservation reservation = (Reservation)this.reservationViewerRepository.findById(id).orElseThrow(() -> {
+                return new RuntimeException("Reservation not found");
+            });
+            reservation.setCustomerId(reservationDTO.getCustomerId());
+            reservation.setFlightId(reservationDTO.getFlightId());
+            reservation.setSeatId(reservationDTO.getSeatId());
+            reservation.setPaymentId(reservationDTO.getPaymentId());
+            this.reservationViewerRepository.save(reservation);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 

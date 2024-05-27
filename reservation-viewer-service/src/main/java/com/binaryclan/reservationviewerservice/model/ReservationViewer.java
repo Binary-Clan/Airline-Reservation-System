@@ -21,7 +21,6 @@ public class ReservationViewer {
     private Integer flightId;
     private Integer seatId;
     private Integer paymentId;
-    private Integer reservationId;
     @Column(updatable = false)
     private LocalDate createdDate;
     private LocalTime createdAt;

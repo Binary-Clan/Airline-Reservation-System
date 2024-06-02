@@ -16,8 +16,9 @@ import java.time.LocalTime;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id; //reservation id
     private Integer customerId;
+    private Integer scheduleId;
     private Integer flightId;
     private Integer seatId;
     private Integer paymentId;

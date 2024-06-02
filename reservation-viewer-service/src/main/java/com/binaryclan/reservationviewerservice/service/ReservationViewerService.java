@@ -22,7 +22,7 @@ public class ReservationViewerService {
         try {
             List<Reservation> reservations = this.reservationViewerRepository.findAll();
             return reservations.stream().map((reservation) -> {
-                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getScheduleId(),reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,7 +35,7 @@ public class ReservationViewerService {
             Reservation reservation = (Reservation)this.reservationViewerRepository.findById(id).orElseThrow(() -> {
                 return new RuntimeException("Reservation not found");
             });
-            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(),reservation.getCreatedDate(), reservation.getCreatedAt());
+            return new ReservationDTO(reservation.getId(), reservation.getCustomerId(),reservation.getScheduleId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(),reservation.getCreatedDate(), reservation.getCreatedAt());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -47,7 +47,7 @@ public class ReservationViewerService {
         try {
             List<Reservation> reservations = this.reservationViewerRepository.findByCustomerId(customerId);
             return reservations.stream().map((reservation) -> {
-                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getScheduleId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class ReservationViewerService {
         try {
             List<Reservation> reservations = this.reservationViewerRepository.findByFlightId(flightId);
             return reservations.stream().map((reservation) -> {
-                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getScheduleId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,6 +72,7 @@ public class ReservationViewerService {
         try {
             Reservation reservation = new Reservation();
             reservation.setCustomerId(reservationDTO.getCustomerId());
+            reservation.setScheduleId(reservationDTO.getScheduleId());
             reservation.setFlightId(reservationDTO.getFlightId());
             reservation.setSeatId(reservationDTO.getSeatId());
             reservation.setPaymentId(reservationDTO.getPaymentId());
@@ -97,6 +98,7 @@ public class ReservationViewerService {
             });
             reservation.setCustomerId(reservationDTO.getCustomerId());
             reservation.setFlightId(reservationDTO.getFlightId());
+            reservation.setScheduleId(reservationDTO.getScheduleId());
             reservation.setSeatId(reservationDTO.getSeatId());
             reservation.setPaymentId(reservationDTO.getPaymentId());
             this.reservationViewerRepository.save(reservation);

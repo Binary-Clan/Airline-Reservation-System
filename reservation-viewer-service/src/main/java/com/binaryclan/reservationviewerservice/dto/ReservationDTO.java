@@ -13,6 +13,7 @@ import java.time.LocalTime;
 public class ReservationDTO {
     private Integer id;
     private Integer customerId;
+    private Integer scheduleId;
     private Integer flightId;
     private Integer seatId;
     private Integer paymentId;

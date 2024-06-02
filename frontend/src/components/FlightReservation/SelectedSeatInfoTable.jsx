@@ -2,11 +2,9 @@ import React, { useMemo } from "react"
 import { Box, Button, Chip, IconButton, Stack, Typography } from "@mui/material"
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table"
 import FlightIcon from "@mui/icons-material/Flight"
-import VisibilityIcon from "@mui/icons-material/Visibility"
-import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
+import { useSelector } from 'react-redux';
 
-const seatInfo = [
+const initialSeatInfo = [
     {
         seat: "1",
         flightName: "Ax5C",
@@ -42,6 +40,16 @@ const seatInfo = [
 ]
 
 const SelectedSeatInfoTable = () => {
+
+    const selectedSeatIds = useSelector((state) => state.seats.selectedSeatIds);
+
+    const filteredSeatInfo = useMemo(() => {
+        return initialSeatInfo.map((seat, index) => ({
+            ...seat,
+            seatId: selectedSeatIds[index] !== undefined ? selectedSeatIds[index] : seat.seatId,
+        }));
+    }, [selectedSeatIds]);
+
     const columns = useMemo(
         () => [
             {
@@ -115,31 +123,13 @@ const SelectedSeatInfoTable = () => {
                     </Stack>
                 ),
             },
-            {
-                id: "actions",
-                header: "Actions",
-                size: 150,
-                Cell: ({ cell }) => (
-                    <Box display='flex' flexDirection='row' gap={1}>
-                        <IconButton color='primary'>
-                            <VisibilityIcon />
-                        </IconButton>
-                        <IconButton color='primary'>
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton color='error'>
-                            <DeleteIcon />
-                        </IconButton>
-                    </Box>
-                ),
-            },
         ],
         []
     )
 
     const table = useMaterialReactTable({
         columns,
-        data: seatInfo,
+        data: filteredSeatInfo,
         pageSizeOptions: [5, 10, 20],
         defaultPageSize: 10,
     })

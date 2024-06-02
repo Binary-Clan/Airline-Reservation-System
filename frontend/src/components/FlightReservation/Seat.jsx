@@ -2,7 +2,7 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const Seat = ({ row, col, onClick, selected }) => {
+const Seat = ({ row, col, onClick, selected, seatNumber }) => {
     return (
         <Box
             sx={{
@@ -17,7 +17,9 @@ const Seat = ({ row, col, onClick, selected }) => {
                 borderRadius: 1,
             }}
             onClick={() => onClick(row, col)}
-        ></Box>
+        >
+            {seatNumber}
+        </Box>
     );
 };
 

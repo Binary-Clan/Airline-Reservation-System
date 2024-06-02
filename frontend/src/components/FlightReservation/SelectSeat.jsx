@@ -1,11 +1,24 @@
 import {Box, Button, Stack, Typography} from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {colors} from "../../utils/colors.js";
 import Deck from "./Deck.jsx";
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setSelectedSeatIds} from "../../../Redux/seatslice.js";
 
 const SelectSeat = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [selectedSeats, setSelectedSeats] = useState([])
+    const handleSeatSelection = (seats)=>{
+        setSelectedSeats(seats)
+        console.log(seats);
+    }
+
+    const handleProceedCheckout = ()=>{
+        dispatch(setSelectedSeatIds(selectedSeats))
+        navigate('/reservation/seat-info')
+    }
     return (
         <Stack
             direction='column'
@@ -129,7 +142,10 @@ const SelectSeat = () => {
                         marginLeft={'auto'}
                         marginRight={'auto'}
                     >
-                        <Deck rows={30} cols={6} />
+                        <Deck
+                            rows={30} cols={6}
+                            onSeatSelection={handleSeatSelection}
+                        />
                     </Box>
                     <Typography variant="body1" gutterBottom>
                         End
@@ -137,7 +153,9 @@ const SelectSeat = () => {
                 </>
             </Stack>
             <stack spacing={2} direction='row' justifyContent='center'>
-                <Button variant="contained" color={'primary'} onClick={() => navigate("/reservation/seat-info")}>
+                <Button variant="contained" color={'primary'}
+                        onClick={handleProceedCheckout}
+                >
                     Proceed to Checkout
                 </Button>
             </stack>

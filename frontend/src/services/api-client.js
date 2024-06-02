@@ -1,7 +1,10 @@
 import axios from "axios";
 
+// const axiosInstance = axios.create({
+//     baseURL: "http://localhost:8083/api"
+// })
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:8083/api"
+    baseURL: "http://localhost:8082/airline_reservation/api"
 })
 
 class APIClient {
@@ -18,6 +21,7 @@ class APIClient {
     get = (id) => { return axiosInstance.get(this.endpoint + "/" + id).then(res => res.data) }
 
     post = (data) => {
+        console.log("reservation data", data)
         return axiosInstance.post(this.endpoint, data).then(res => res.data)
     }
 

@@ -14,6 +14,9 @@ import {
 import AddIcon from "@mui/icons-material/Add"
 import {colors} from "../../utils/colors.js";
 import {useNavigate} from "react-router-dom";
+import toast from "react-hot-toast";
+import {useSelector} from "react-redux";
+import {useAddReservation} from "../../hooks/seatreserve.js";
 
 const ProceedPayment = () => {
     const navigate  = useNavigate();
@@ -23,14 +26,39 @@ const ProceedPayment = () => {
     const [cardType, setCardType] = React.useState("")
     const [cardNumber, setCardNumber] = React.useState("")
     const [csv, setCsv] = React.useState("")
-
+    const selectedSeatIds = useSelector((state) => state.seats.selectedSeatIds);
+    const {mutate: addReservationMutate} = useAddReservation()
     const handlePayment = () => {
         console.log(cardType)
         console.log(cardNumber)
         console.log(csv)
         console.log(expiryDate)
+        handleAddReservation()
+        // selectedSeatIds.forEach((seatId) => {
+        //     handleAddReservation(seatId)
+        // })
+        // navigate("/reservation/payment-success")
+    }
 
-        navigate("/reservation/payment-success")
+    const handleAddReservation = () => {
+        const newReservation = {
+            customerId: 12345,
+            scheduleId:12345,
+            flightId:12345,
+            seatId:1,
+            paymentId:12345
+        }
+
+        addReservationMutate(newReservation, {
+            onSuccess: () => {
+                toast("✅ Reservation(s) added successfully")
+                navigate("/reservation/payment-success")
+
+            },
+            onError: (error) => {
+                toast("😵 Error adding reservation: " + error.message)
+            },
+        })
     }
 
     function clearFields() {

@@ -22,12 +22,13 @@ public class ReservationService {
         try {
             Reservation reservation = new Reservation();
             reservation.setCustomerId(reservationDTO.getCustomerId());
+            reservation.setScheduleId(reservationDTO.getScheduleId());
             reservation.setFlightId(reservationDTO.getFlightId());
             reservation.setSeatId(reservationDTO.getSeatId());
             reservation.setPaymentId(reservationDTO.getPaymentId());
             Reservation savedItem = this.reservationRepository.save(reservation);
             return ResponseEntity.ok(new ReservationDTO(savedItem.getId(),
-                    savedItem.getCustomerId(), savedItem.getFlightId(),
+                    savedItem.getCustomerId(), savedItem.getScheduleId(),savedItem.getFlightId(),
                     savedItem.getSeatId(), savedItem.getPaymentId(),
                     savedItem.getCreatedDate(), savedItem.getCreatedAt()));
 
@@ -41,7 +42,7 @@ public class ReservationService {
         try {
             List<Reservation> reservations = this.reservationRepository.findAll();
             return ResponseEntity.ok(reservations.stream().map((reservation) -> {
-                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
+                return new ReservationDTO(reservation.getId(), reservation.getCustomerId(), reservation.getScheduleId(), reservation.getFlightId(), reservation.getSeatId(), reservation.getPaymentId(), reservation.getCreatedDate(), reservation.getCreatedAt());
             }).collect(Collectors.toList()));
         }
         catch (Exception e) {
@@ -58,6 +59,7 @@ public class ReservationService {
             });
             return ResponseEntity.ok(new ReservationDTO(
                     reservation.getId(), reservation.getCustomerId(),
+                    reservation.getScheduleId(),
                     reservation.getFlightId(), reservation.getSeatId(),
                     reservation.getPaymentId(), reservation.getCreatedDate(),
                     reservation.getCreatedAt()));
@@ -84,11 +86,13 @@ public class ReservationService {
                     .map(reservation -> {
                         reservation.setCustomerId(reservationDTO.getCustomerId());
                         reservation.setFlightId(reservationDTO.getFlightId());
+                        reservation.setScheduleId(reservationDTO.getScheduleId());
                         reservation.setSeatId(reservationDTO.getSeatId());
                         reservation.setPaymentId(reservationDTO.getPaymentId());
                         Reservation savedItem = this.reservationRepository.save(reservation);
                         return ResponseEntity.ok(new ReservationDTO(savedItem.getId(),
-                                savedItem.getCustomerId(), savedItem.getFlightId(),
+                                savedItem.getCustomerId(), savedItem.getScheduleId(),
+                                savedItem.getFlightId(),
                                 savedItem.getSeatId(), savedItem.getPaymentId(),
                                 savedItem.getCreatedDate(), savedItem.getCreatedAt()));
                     })

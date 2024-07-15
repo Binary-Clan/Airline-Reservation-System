@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/seats")
+@RequestMapping("/airline_reservation/api/seats")
 public class FlightScheduleSeatInformationController {
 
     @Autowired
     private FlightScheduleSeatInformationService seatInformationService;
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<FlightScheduleSeatInformationOutputDto> addSeatInformation(@RequestBody FlightScheduleSeatInformationInputDto inputDto) {
         FlightScheduleSeatInformationOutputDto savedSeatInformation = seatInformationService.addSeatInformation(inputDto);
         return ResponseEntity.ok(savedSeatInformation);
@@ -28,7 +28,7 @@ public class FlightScheduleSeatInformationController {
         return ResponseEntity.ok(seatInformation);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<FlightScheduleSeatInformationOutputDto>> getAllSeatInformation() {
         List<FlightScheduleSeatInformationOutputDto> seatInformationList = seatInformationService.getAllSeatInformation();
         return ResponseEntity.ok(seatInformationList);

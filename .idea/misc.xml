@@ -10,12 +10,10 @@
         <option value="$PROJECT_DIR$/reservation-viewer-service/pom.xml" />
         <option value="$PROJECT_DIR$/service-registry-/pom.xml" />
         <option value="$PROJECT_DIR$/service-registry/pom.xml" />
+        <option value="$PROJECT_DIR$/../api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
       </list>
     </option>
   </component>
-<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="openjdk-22" project-jdk-type="JavaSDK" />
-=======
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="19" project-jdk-type="JavaSDK" />
->>>>>>> 91ce4b5842be85ea80c226e978e011afbd8979ad
 </project>

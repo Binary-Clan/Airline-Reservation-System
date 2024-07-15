@@ -10,16 +10,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="api-gateway" />
         <module name="frontend-service" />
         <module name="flight-information-service" />
         <module name="service-registry" />
-        <module name="reservation-service" />
         <module name="reservation-viewer-service" />
+        <module name="reservation-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="-parameters" />
       <module name="flight-information-service" options="-parameters" />
       <module name="frontend-service" options="-parameters" />
       <module name="reservation-service" options="-parameters" />

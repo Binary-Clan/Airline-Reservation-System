@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { useAddFlight } from "../../hooks/flight";
 
 const statusOptions = ["On Time", "Delayed", "Cancelled"];
 const airports = [
@@ -37,18 +38,32 @@ export default function AddFlightSchedule() {
   const [destinationAirport, setDestinationAirport] = React.useState(null);
   const [status, setStatus] = React.useState("");
 
+  const mutation = useAddFlight();
+
   const handleAddFlightSchedule = () => {
-    console.log(departureDate);
-    console.log(departureTime);
-    console.log("Flight:", flight);
-    console.log("Departure Date:", departureDate?.toISOString());
-    console.log("Departure Time:", departureTime?.toISOString());
-    console.log("Arrival Date:", arrivalDate?.toISOString());
-    console.log("Arrival Time:", arrivalTime?.toISOString());
-    console.log("Source Airport:", sourceAirport);
-    console.log("Destination Airport:", destinationAirport);
-    console.log("Status:", status);
-    // Additional logic to handle adding flight schedule
+    const flightSchedule = {
+      flightName: flight,
+      departureDateTime: `${departureDate?.format(
+        "YYYY-MM-DD"
+      )}T${departureTime?.format("HH:mm:ss")}`,
+      arrivalDateTime: `${arrivalDate?.format(
+        "YYYY-MM-DD"
+      )}T${arrivalTime?.format("HH:mm:ss")}`,
+      source: sourceAirport?.name,
+      destination: destinationAirport?.name,
+      status,
+    };
+
+    mutation.mutate(flightSchedule, {
+      onSuccess: () => {
+        // Optionally, you can reset the form or show a success message here
+        console.log("Flight schedule added successfully");
+      },
+      onError: (error) => {
+        // Handle error case
+        console.error("Error adding flight schedule:", error);
+      },
+    });
   };
 
   return (
@@ -110,7 +125,7 @@ export default function AddFlightSchedule() {
         <Grid item xs={12}>
           <Autocomplete
             fullWidth
-            options={airports /* Your source airport options here */}
+            options={airports}
             getOptionLabel={(option) => option.name}
             value={sourceAirport}
             onChange={(event, newValue) => setSourceAirport(newValue)}
@@ -122,7 +137,7 @@ export default function AddFlightSchedule() {
         <Grid item xs={12}>
           <Autocomplete
             fullWidth
-            options={airports /* Your destination airport options here */}
+            options={airports}
             getOptionLabel={(option) => option.name}
             value={destinationAirport}
             onChange={(event, newValue) => setDestinationAirport(newValue)}
@@ -152,8 +167,9 @@ export default function AddFlightSchedule() {
             color='primary'
             onClick={handleAddFlightSchedule}
             startIcon={<AddIcon />}
+            disabled={mutation.isLoading} // Disable the button while loading
           >
-            Add New Flight Schedule
+            {mutation.isLoading ? "Adding..." : "Add New Flight Schedule"}
           </Button>
         </Grid>
       </Grid>

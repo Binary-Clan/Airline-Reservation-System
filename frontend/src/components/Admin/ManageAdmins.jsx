@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
-import { colors } from "../../utils/colors";
+import { useGetAdmins, useDeleteAdmin } from "../../hooks/admins";
 
 const AdminCard = ({ id, username, onDelete }) => {
   return (
@@ -20,7 +20,7 @@ const AdminCard = ({ id, username, onDelete }) => {
       justifyContent='space-between'
       alignItems='center'
       spacing={2}
-      bgcolor={colors.cardBackground}
+      bgcolor='background.paper'
       borderRadius={2}
       padding={2}
     >
@@ -34,23 +34,11 @@ const AdminCard = ({ id, username, onDelete }) => {
 
 const ManageAdmins = () => {
   const navigate = useNavigate();
-  const [admins, setAdmins] = useState([
-    {
-      id: 1,
-      username: "rusiru",
-    },
-    {
-      id: 2,
-      username: "john_doe",
-    },
-    {
-      id: 3,
-      username: "jane_smith",
-    },
-  ]);
-
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedAdminId, setSelectedAdminId] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const { data: admins, isLoading, isError, error } = useGetAdmins();
+  const deleteAdminMutation = useDeleteAdmin();
 
   const handleDeleteClick = (id) => {
     setSelectedAdminId(id);
@@ -58,17 +46,20 @@ const ManageAdmins = () => {
   };
 
   const handleConfirmDelete = () => {
-    setAdmins((prevAdmins) =>
-      prevAdmins.filter((admin) => admin.id !== selectedAdminId)
-    );
-    setIsDeleteDialogOpen(false);
-    setSelectedAdminId(null);
+    if (selectedAdminId) {
+      deleteAdminMutation.mutate(selectedAdminId);
+      setIsDeleteDialogOpen(false);
+      setSelectedAdminId(null);
+    }
   };
 
   const handleCloseDeleteDialog = () => {
     setIsDeleteDialogOpen(false);
     setSelectedAdminId(null);
   };
+
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isError) return <Typography>Error: {error.message}</Typography>;
 
   return (
     <>

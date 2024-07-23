@@ -1,55 +1,18 @@
-import React, { useMemo } from "react"
-import { Box, Button, Chip, IconButton, Stack, Typography } from "@mui/material"
-import { MaterialReactTable, useMaterialReactTable } from "material-react-table"
-import FlightIcon from "@mui/icons-material/Flight"
-import VisibilityIcon from "@mui/icons-material/Visibility"
-import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
-
-const flightReservationData = [
-  {
-    scheduleId: "1",
-    flightName: "Ax5C",
-    airlineName: "Sri Lankan Air",
-    status: "Departed",
-    arrivalDateTime: "16 May 3:55 AM",
-    departureDateTime: "15 May 2:55 PM",
-    source: "Sri Lanka",
-    destination: "Dubai",
-  },
-  {
-    scheduleId: "2",
-    flightName: "B787",
-    airlineName: "Emirates",
-    status: "On Time",
-    arrivalDateTime: "18 May 6:30 AM",
-    departureDateTime: "17 May 10:30 PM",
-    source: "Dubai",
-    destination: "London",
-  },
-  {
-    scheduleId: "3",
-    flightName: "QR922",
-    airlineName: "Qatar Airways",
-    status: "Delayed",
-    arrivalDateTime: "20 May 12:45 PM",
-    departureDateTime: "20 May 3:00 AM",
-    source: "Doha",
-    destination: "Sydney",
-  },
-  {
-    scheduleId: "4",
-    flightName: "AF198",
-    airlineName: "Air France",
-    status: "Cancelled",
-    arrivalDateTime: "22 May 9:20 AM",
-    departureDateTime: "21 May 11:00 PM",
-    source: "Paris",
-    destination: "New York",
-  },
-]
+import React, { useMemo } from "react";
+import { Box, Chip, IconButton, Stack, Typography } from "@mui/material";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+import FlightIcon from "@mui/icons-material/Flight";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useGetFlights } from "../../hooks/flight";
 
 const AdminFlightScheduleTable = () => {
+  const { data, isLoading, isError, error } = useGetFlights();
+
   const columns = useMemo(
     () => [
       {
@@ -83,8 +46,10 @@ const AdminFlightScheduleTable = () => {
             color={
               cell.getValue() === "Departed"
                 ? "success"
-                : cell.getValue() === "On Air"
+                : cell.getValue() === "Delayed"
                 ? "warning"
+                : cell.getValue() === "Cancelled"
+                ? "error"
                 : "default"
             }
             variant='outlined'
@@ -137,20 +102,26 @@ const AdminFlightScheduleTable = () => {
       },
     ],
     []
-  )
+  );
 
-  const table = useMaterialReactTable({
-    columns,
-    data: flightReservationData,
-    pageSizeOptions: [5, 10, 20],
-    defaultPageSize: 10,
-  })
+  if (isLoading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+  if (isError) {
+    return <Typography>Error: {error.message}</Typography>;
+  }
 
   return (
     <Box sx={{ width: "100%", margin: "0 auto" }}>
-      <MaterialReactTable table={table} />
+      <MaterialReactTable
+        columns={columns}
+        data={data || []} // Provide default empty array if no data
+        pageSizeOptions={[5, 10, 20]}
+        defaultPageSize={10}
+      />
     </Box>
-  )
-}
+  );
+};
 
-export default AdminFlightScheduleTable
+export default AdminFlightScheduleTable;

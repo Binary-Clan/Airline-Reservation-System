@@ -6,52 +6,16 @@ import {
 } from "material-react-table";
 import FlightIcon from "@mui/icons-material/Flight";
 import { useNavigate } from "react-router-dom";
+import { useGetFlightSchedules } from "../../hooks/flightSchedule";
 
-const flightScheduleData = [
-  {
-    scheduleId: "1",
-    flightName: "Ax5C",
-    airlineName: "Sri Lankan Air",
-    status: "Departed",
-    arrivalDateTime: "16 May 3:55 AM",
-    departureDateTime: "15 May 2:55 PM",
-    source: "Sri Lanka",
-    destination: "Dubai",
-  },
-  {
-    scheduleId: "2",
-    flightName: "B787",
-    airlineName: "Emirates",
-    status: "On Time",
-    arrivalDateTime: "18 May 6:30 AM",
-    departureDateTime: "17 May 10:30 PM",
-    source: "Dubai",
-    destination: "London",
-  },
-  {
-    scheduleId: "3",
-    flightName: "QR922",
-    airlineName: "Qatar Airways",
-    status: "Delayed",
-    arrivalDateTime: "20 May 12:45 PM",
-    departureDateTime: "20 May 3:00 AM",
-    source: "Doha",
-    destination: "Sydney",
-  },
-  {
-    scheduleId: "4",
-    flightName: "AF198",
-    airlineName: "Air France",
-    status: "Cancelled",
-    arrivalDateTime: "22 May 9:20 AM",
-    departureDateTime: "21 May 11:00 PM",
-    source: "Paris",
-    destination: "New York",
-  },
-];
-
-const FlightsList = () => {
+const FlightSchedulesList = () => {
   const navigate = useNavigate();
+  const {
+    data: flightSchedules = [],
+    isLoading,
+    isError,
+  } = useGetFlightSchedules();
+
   const columns = useMemo(
     () => [
       {
@@ -126,7 +90,11 @@ const FlightsList = () => {
         Cell: ({ row }) => (
           <Box display='flex' flexDirection='row' gap={1}>
             <Button
-              onClick={() => navigate("/reservation/flight-reservation")}
+              onClick={() =>
+                navigate(
+                  `/reservation/flight-reservation/${row.original.scheduleId}`
+                )
+              }
               variant='contained'
               color='primary'
             >
@@ -136,12 +104,15 @@ const FlightsList = () => {
         ),
       },
     ],
-    []
+    [navigate]
   );
+
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isError) return <Typography>Error fetching data</Typography>;
 
   const table = useMaterialReactTable({
     columns,
-    data: flightScheduleData,
+    data: flightSchedules,
     pageSizeOptions: [5, 10, 20],
     defaultPageSize: 10,
   });
@@ -153,4 +124,4 @@ const FlightsList = () => {
   );
 };
 
-export default FlightsList;
+export default FlightSchedulesList;

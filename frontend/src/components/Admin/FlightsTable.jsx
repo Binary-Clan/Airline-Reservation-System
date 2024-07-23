@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Box,
   Button,
   Chip,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,40 +22,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useGetFlights } from "../../hooks/flight";
 
 const FlightsTable = () => {
   const navigate = useNavigate();
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [flightsData, setFlightsData] = useState([]);
 
-  const mockFlights = [
-    {
-      id: "1",
-      flightName: "Flight 101",
-      airlineName: "Airways",
-      capacity: 200,
-      flightType: "International",
-      seatType: "Economy",
-      maximumWeightForPassenger: 30,
-      airlineService: "Full Service",
-    },
-    {
-      id: "2",
-      flightName: "Flight 202",
-      airlineName: "Sky High",
-      capacity: 150,
-      flightType: "Domestic",
-      seatType: "Business",
-      maximumWeightForPassenger: 40,
-      airlineService: "Low Cost",
-    },
-    // Add more mock data as needed
-  ];
-
-  useEffect(() => {
-    setFlightsData(mockFlights);
-  }, []);
+  const { data: flightsData, isLoading, isError, error } = useGetFlights();
 
   const handleDeleteClick = (flight) => {
     setSelectedFlight(flight);
@@ -65,9 +38,7 @@ const FlightsTable = () => {
 
   const handleConfirmDelete = () => {
     if (selectedFlight) {
-      setFlightsData((prevData) =>
-        prevData.filter((flight) => flight.id !== selectedFlight.id)
-      );
+      // Call API to delete flight here, then update local state
       toast("✅ Successfully deleted");
       setIsDeleteDialogOpen(false);
       setSelectedFlight(null);
@@ -213,44 +184,46 @@ const FlightsTable = () => {
         ),
       },
     ],
-    []
+    [navigate]
   );
 
-  const table = useMaterialReactTable({
-    columns,
-    data: flightsData,
-    pageSizeOptions: [5, 10, 20],
-    defaultPageSize: 10,
-  });
+  if (isLoading) {
+    return <CircularProgress />;
+  }
+
+  if (isError) {
+    return <Typography>Error: {error.message}</Typography>;
+  }
 
   return (
     <Box sx={{ width: "100%", margin: "0 auto" }}>
-      <>
-        <MaterialReactTable table={table} />
-        <Dialog
-          open={isDeleteDialogOpen}
-          onClose={handleCloseDeleteDialog}
-          aria-labelledby='alert-dialog-title'
-          aria-describedby='alert-dialog-description'
-        >
-          <DialogTitle id='alert-dialog-title'>
-            {"Confirm Deletion"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id='alert-dialog-description'>
-              Are you sure you want to delete this flight?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDeleteDialog} color='primary'>
-              Cancel
-            </Button>
-            <Button onClick={handleConfirmDelete} color='error' autoFocus>
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </>
+      <MaterialReactTable
+        columns={columns}
+        data={flightsData || []} // Provide default empty array if no data
+        pageSizeOptions={[5, 10, 20]}
+        defaultPageSize={10}
+      />
+      <Dialog
+        open={isDeleteDialogOpen}
+        onClose={handleCloseDeleteDialog}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
+      >
+        <DialogTitle id='alert-dialog-title'>{"Confirm Deletion"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            Are you sure you want to delete this flight?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color='primary'>
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color='error' autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

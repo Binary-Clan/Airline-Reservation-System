@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Box,
   Button,
@@ -12,52 +12,72 @@ import {
   IconButton,
   Stack,
   Typography,
-} from "@mui/material"
-import { MaterialReactTable, useMaterialReactTable } from "material-react-table"
-import FlightIcon from "@mui/icons-material/Flight"
-import VisibilityIcon from "@mui/icons-material/Visibility"
-import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
-import { useDeleteFlight, useGetFlights } from "../../hooks/flight"
-import { useNavigate } from "react-router-dom"
-import toast from "react-hot-toast"
+} from "@mui/material";
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+} from "material-react-table";
+import FlightIcon from "@mui/icons-material/Flight";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const FlightsTable = () => {
-  const { data: flights, isLoading, refetch } = useGetFlights()
-  const navigate = useNavigate()
-  const deleteFlightMutation = useDeleteFlight()
-  const [selectedFlight, setSelectedFlight] = useState(null)
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [flightsData, setFlightsData] = useState([])
+  const navigate = useNavigate();
+  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [flightsData, setFlightsData] = useState([]);
 
-  const handleDeleteClick = (flight) => {
-    setSelectedFlight(flight)
-    setIsDeleteDialogOpen(true)
-  }
+  const mockFlights = [
+    {
+      id: "1",
+      flightName: "Flight 101",
+      airlineName: "Airways",
+      capacity: 200,
+      flightType: "International",
+      seatType: "Economy",
+      maximumWeightForPassenger: 30,
+      airlineService: "Full Service",
+    },
+    {
+      id: "2",
+      flightName: "Flight 202",
+      airlineName: "Sky High",
+      capacity: 150,
+      flightType: "Domestic",
+      seatType: "Business",
+      maximumWeightForPassenger: 40,
+      airlineService: "Low Cost",
+    },
+    // Add more mock data as needed
+  ];
 
   useEffect(() => {
-    if (flights) {
-      setFlightsData(flights)
-    }
-  }, [flights])
+    setFlightsData(mockFlights);
+  }, []);
+
+  const handleDeleteClick = (flight) => {
+    setSelectedFlight(flight);
+    setIsDeleteDialogOpen(true);
+  };
 
   const handleConfirmDelete = () => {
     if (selectedFlight) {
-      deleteFlightMutation.mutate(selectedFlight.id, {
-        onSuccess: () => {
-          toast("✅ Successfully deleted")
-          refetch()
-          setIsDeleteDialogOpen(false)
-          setSelectedFlight(null)
-        },
-      })
+      setFlightsData((prevData) =>
+        prevData.filter((flight) => flight.id !== selectedFlight.id)
+      );
+      toast("✅ Successfully deleted");
+      setIsDeleteDialogOpen(false);
+      setSelectedFlight(null);
     }
-  }
+  };
 
   const handleCloseDeleteDialog = () => {
-    setSelectedFlight(null)
-    setIsDeleteDialogOpen(false)
-  }
+    setSelectedFlight(null);
+    setIsDeleteDialogOpen(false);
+  };
 
   const columns = useMemo(
     () => [
@@ -194,49 +214,45 @@ const FlightsTable = () => {
       },
     ],
     []
-  )
+  );
 
   const table = useMaterialReactTable({
     columns,
     data: flightsData,
     pageSizeOptions: [5, 10, 20],
     defaultPageSize: 10,
-  })
+  });
 
   return (
     <Box sx={{ width: "100%", margin: "0 auto" }}>
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <MaterialReactTable table={table} />
-          <Dialog
-            open={isDeleteDialogOpen}
-            onClose={handleCloseDeleteDialog}
-            aria-labelledby='alert-dialog-title'
-            aria-describedby='alert-dialog-description'
-          >
-            <DialogTitle id='alert-dialog-title'>
-              {"Confirm Deletion"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id='alert-dialog-description'>
-                Are you sure you want to delete this flight?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleCloseDeleteDialog} color='primary'>
-                Cancel
-              </Button>
-              <Button onClick={handleConfirmDelete} color='error' autoFocus>
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </>
-      )}
+      <>
+        <MaterialReactTable table={table} />
+        <Dialog
+          open={isDeleteDialogOpen}
+          onClose={handleCloseDeleteDialog}
+          aria-labelledby='alert-dialog-title'
+          aria-describedby='alert-dialog-description'
+        >
+          <DialogTitle id='alert-dialog-title'>
+            {"Confirm Deletion"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id='alert-dialog-description'>
+              Are you sure you want to delete this flight?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDeleteDialog} color='primary'>
+              Cancel
+            </Button>
+            <Button onClick={handleConfirmDelete} color='error' autoFocus>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
     </Box>
-  )
-}
+  );
+};
 
-export default FlightsTable
+export default FlightsTable;

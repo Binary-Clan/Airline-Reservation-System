@@ -1,8 +1,8 @@
-import * as React from "react"
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
-import { DatePicker } from "@mui/x-date-pickers/DatePicker"
-import { TimePicker } from "@mui/x-date-pickers/TimePicker"
+import * as React from "react";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import {
   Autocomplete,
   Button,
@@ -10,34 +10,46 @@ import {
   MenuItem,
   TextField,
   Typography,
-} from "@mui/material"
-import AddIcon from "@mui/icons-material/Add"
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
-const statusOptions = ["On Time", "Delayed", "Cancelled"]
+const statusOptions = ["On Time", "Delayed", "Cancelled"];
+const airports = [
+  { code: "LAX", name: "Los Angeles International Airport" },
+  { code: "JFK", name: "John F. Kennedy International Airport" },
+  { code: "ORD", name: "O'Hare International Airport" },
+  { code: "ATL", name: "Hartsfield-Jackson Atlanta International Airport" },
+  { code: "DFW", name: "Dallas/Fort Worth International Airport" },
+  { code: "DXB", name: "Dubai International Airport" },
+  { code: "SIN", name: "Singapore Changi Airport" },
+  { code: "LHR", name: "London Heathrow Airport" },
+  { code: "CDG", name: "Charles de Gaulle Airport" },
+  { code: "HND", name: "Tokyo Haneda Airport" },
+];
 
 export default function AddFlightSchedule() {
-  const [flight, setFlight] = React.useState(null)
-  const [departureDate, setDepartureDate] = React.useState(null)
-  const [departureTime, setDepartureTime] = React.useState(null)
-  const [arrivalDate, setArrivalDate] = React.useState(null)
-  const [arrivalTime, setArrivalTime] = React.useState(null)
-  const [sourceAirport, setSourceAirport] = React.useState(null)
-  const [destinationAirport, setDestinationAirport] = React.useState(null)
-  const [status, setStatus] = React.useState("")
+  const [flight, setFlight] = React.useState(null);
+  const [departureDate, setDepartureDate] = React.useState(null);
+  const [departureTime, setDepartureTime] = React.useState(null);
+  const [arrivalDate, setArrivalDate] = React.useState(null);
+  const [arrivalTime, setArrivalTime] = React.useState(null);
+  const [sourceAirport, setSourceAirport] = React.useState(null);
+  const [destinationAirport, setDestinationAirport] = React.useState(null);
+  const [status, setStatus] = React.useState("");
 
   const handleAddFlightSchedule = () => {
-    console.log(departureDate)
-    console.log(departureTime)
-    console.log("Flight:", flight)
-    console.log("Departure Date:", departureDate?.toISOString())
-    console.log("Departure Time:", departureTime?.toISOString())
-    console.log("Arrival Date:", arrivalDate?.toISOString())
-    console.log("Arrival Time:", arrivalTime?.toISOString())
-    console.log("Source Airport:", sourceAirport)
-    console.log("Destination Airport:", destinationAirport)
-    console.log("Status:", status)
+    console.log(departureDate);
+    console.log(departureTime);
+    console.log("Flight:", flight);
+    console.log("Departure Date:", departureDate?.toISOString());
+    console.log("Departure Time:", departureTime?.toISOString());
+    console.log("Arrival Date:", arrivalDate?.toISOString());
+    console.log("Arrival Time:", arrivalTime?.toISOString());
+    console.log("Source Airport:", sourceAirport);
+    console.log("Destination Airport:", destinationAirport);
+    console.log("Status:", status);
     // Additional logic to handle adding flight schedule
-  }
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -48,8 +60,10 @@ export default function AddFlightSchedule() {
           </Typography>
           <Autocomplete
             fullWidth
-            options={[] /* Your flight options here */}
-            getOptionLabel={(option) => option.flightName}
+            options={
+              ["Flight 101", "Flight 202"] /* Your flight options here */
+            }
+            getOptionLabel={(option) => option}
             value={flight}
             onChange={(event, newValue) => setFlight(newValue)}
             renderInput={(params) => (
@@ -96,7 +110,7 @@ export default function AddFlightSchedule() {
         <Grid item xs={12}>
           <Autocomplete
             fullWidth
-            options={[] /* Your source airport options here */}
+            options={airports /* Your source airport options here */}
             getOptionLabel={(option) => option.name}
             value={sourceAirport}
             onChange={(event, newValue) => setSourceAirport(newValue)}
@@ -108,7 +122,7 @@ export default function AddFlightSchedule() {
         <Grid item xs={12}>
           <Autocomplete
             fullWidth
-            options={[] /* Your destination airport options here */}
+            options={airports /* Your destination airport options here */}
             getOptionLabel={(option) => option.name}
             value={destinationAirport}
             onChange={(event, newValue) => setDestinationAirport(newValue)}
@@ -144,5 +158,5 @@ export default function AddFlightSchedule() {
         </Grid>
       </Grid>
     </LocalizationProvider>
-  )
+  );
 }

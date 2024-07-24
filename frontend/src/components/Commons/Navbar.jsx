@@ -1,10 +1,12 @@
-import { Stack, Button } from "@mui/material"
-import logo from "../../assets/logo.png"
-import { Link, useNavigate } from "react-router-dom"
+import { Stack, Button, Avatar, IconButton } from "@mui/material";
+import logo from "../../assets/logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import { blue, deepOrange } from "@mui/material/colors";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 const Navbar = () => {
-  const navBarItems = []
-  const navigate = useNavigate()
+  const navBarItems = [];
+  const navigate = useNavigate();
 
   return (
     <>
@@ -28,16 +30,25 @@ const Navbar = () => {
           <Button variant='contained' color='primary'>
             Checkout your seat
           </Button>
-          <Button variant='contained' color='primary'>
+          {/* <Button variant='contained' color='primary'>
             Login
           </Button>
           <Button variant='contained' color='primary'>
             Register
-          </Button>
+          </Button> */}
+          <Avatar
+            onClick={() => navigate("/user/userProfile")}
+            sx={{ bgcolor: blue[500] }}
+          >
+            NS
+          </Avatar>
+          <IconButton onClick={() => navigate("/admin/home")}>
+            <AdminPanelSettingsIcon />
+          </IconButton>
         </Stack>
       </Stack>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

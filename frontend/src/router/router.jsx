@@ -1,18 +1,20 @@
-import { createBrowserRouter } from "react-router-dom"
-import Layout from "../components/Commons/Layout"
-import HomePage from "../components/Commons/HomePage"
-import AdminFlightSchedule from "../components/Admin/AdminFlightSchedule"
-import ManageAdmins from "../components/Admin/ManageAdmins"
-import AddFlightSchedule from "../components/Admin/AddFlightSchedule"
-import AddFlight from "../components/Admin/AddFlight.jsx"
-import UserProfile from "../components/User/UserProfile.jsx"
-import ManageFlights from "../components/Admin/ManageFlights.jsx"
-import FlightsTable from "../components/Admin/FlightsTable.jsx"
-import SelectSeat from "../components/FlightReservation/SelectSeat.jsx"
-import SelectedSeatInformation from "../components/FlightReservation/SelectedSeatInformation.jsx"
-import ProceedPayment from "../components/FlightReservation/ProceedPayment.jsx"
-import PaymentSucess from "../components/FlightReservation/PaymentSucess.jsx"
-import UpdateFlight from "../components/Admin/UpdateFlight.jsx"
+import { createBrowserRouter } from "react-router-dom";
+import Layout from "../components/Commons/Layout";
+import HomePage from "../components/Commons/HomePage";
+import AdminFlightSchedule from "../components/Admin/AdminFlightSchedule";
+import ManageAdmins from "../components/Admin/ManageAdmins";
+import AddFlightSchedule from "../components/Admin/AddFlightSchedule";
+import AddFlight from "../components/Admin/AddFlight.jsx";
+import UserProfile from "../components/User/UserProfile.jsx";
+import ManageFlights from "../components/Admin/ManageFlights.jsx";
+import FlightsTable from "../components/Admin/FlightsTable.jsx";
+import SelectSeat from "../components/FlightReservation/SelectSeat.jsx";
+import SelectedSeatInformation from "../components/FlightReservation/SelectedSeatInformation.jsx";
+import ProceedPayment from "../components/FlightReservation/ProceedPayment.jsx";
+import PaymentSucess from "../components/FlightReservation/PaymentSucess.jsx";
+import UpdateFlight from "../components/Admin/UpdateFlight.jsx";
+import FlightsList from "../components/FlightReservation/FlightsList.jsx";
+import AdminHome from "../components/Admin/AdminHome.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
     // errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "/admin/home", element: <AdminHome /> },
       { path: "/admin/schedule", element: <AdminFlightSchedule /> },
       { path: "/admin/addSchedule", element: <AddFlightSchedule /> },
       { path: "/admin/manageAdmins", element: <ManageAdmins /> },
@@ -28,6 +31,7 @@ const router = createBrowserRouter([
       { path: "/admin/addFlight", element: <AddFlight /> },
       { path: "/admin/editFlight/:flightId", element: <UpdateFlight /> },
       { path: "/admin/flightsTable", element: <FlightsTable /> },
+      { path: "/reservation/flightsList", element: <FlightsList /> },
       { path: "/user/userProfile", element: <UserProfile /> },
       { path: "/reservation/flight-reservation", element: <SelectSeat /> },
       { path: "/reservation/seat-info", element: <SelectedSeatInformation /> },
@@ -35,6 +39,6 @@ const router = createBrowserRouter([
       { path: "/reservation/payment-success", element: <PaymentSucess /> },
     ],
   },
-])
+]);
 
-export default router
+export default router;

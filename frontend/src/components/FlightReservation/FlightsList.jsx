@@ -1,17 +1,20 @@
 import React, { useMemo } from "react";
-import { Box, Chip, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Button, Chip, Stack, Typography } from "@mui/material";
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from "material-react-table";
 import FlightIcon from "@mui/icons-material/Flight";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { useGetFlights } from "../../hooks/flight";
+import { useNavigate } from "react-router-dom";
+import { useGetFlightSchedules } from "../../hooks/flightSchedule";
 
-const AdminFlightScheduleTable = () => {
-  const { data, isLoading, isError, error } = useGetFlights();
+const FlightSchedulesList = () => {
+  const navigate = useNavigate();
+  const {
+    data: flightSchedules = [],
+    isLoading,
+    isError,
+  } = useGetFlightSchedules();
 
   const columns = useMemo(
     () => [
@@ -46,10 +49,8 @@ const AdminFlightScheduleTable = () => {
             color={
               cell.getValue() === "Departed"
                 ? "success"
-                : cell.getValue() === "Delayed"
+                : cell.getValue() === "On Time"
                 ? "warning"
-                : cell.getValue() === "Cancelled"
-                ? "error"
                 : "default"
             }
             variant='outlined'
@@ -86,42 +87,41 @@ const AdminFlightScheduleTable = () => {
         id: "actions",
         header: "Actions",
         size: 150,
-        Cell: ({ cell }) => (
+        Cell: ({ row }) => (
           <Box display='flex' flexDirection='row' gap={1}>
-            <IconButton color='primary'>
-              <VisibilityIcon />
-            </IconButton>
-            <IconButton color='primary'>
-              <EditIcon />
-            </IconButton>
-            <IconButton color='error'>
-              <DeleteIcon />
-            </IconButton>
+            <Button
+              onClick={() =>
+                navigate(
+                  `/reservation/flight-reservation/${row.original.scheduleId}`
+                )
+              }
+              variant='contained'
+              color='primary'
+            >
+              Book the Flight
+            </Button>
           </Box>
         ),
       },
     ],
-    []
+    [navigate]
   );
 
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (isError) return <Typography>Error fetching data</Typography>;
 
-  if (isError) {
-    return <Typography>Error: {error.message}</Typography>;
-  }
+  const table = useMaterialReactTable({
+    columns,
+    data: flightSchedules,
+    pageSizeOptions: [5, 10, 20],
+    defaultPageSize: 10,
+  });
 
   return (
     <Box sx={{ width: "100%", margin: "0 auto" }}>
-      <MaterialReactTable
-        columns={columns}
-        data={data || []} // Provide default empty array if no data
-        pageSizeOptions={[5, 10, 20]}
-        defaultPageSize={10}
-      />
+      <MaterialReactTable table={table} />
     </Box>
   );
 };
 
-export default AdminFlightScheduleTable;
+export default FlightSchedulesList;

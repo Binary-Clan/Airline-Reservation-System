@@ -1,8 +1,10 @@
-import { Stack, Button } from "@mui/material"
-import React from "react"
-import logo from "../../assets/logo.png"
+import { Stack, Button } from "@mui/material";
+import React from "react";
+import logo from "../../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <Stack
       direction='column'
@@ -13,7 +15,11 @@ const HomePage = () => {
     >
       <img width={800} src={logo} alt='' srcset='' />
       <Stack spacing={2} direction='row'>
-        <Button variant='contained' color='primary'>
+        <Button
+          onClick={() => navigate("/reservation/flightsList")}
+          variant='contained'
+          color='primary'
+        >
           Book a flight
         </Button>
         <Button variant='outlined' color='primary'>
@@ -21,6 +27,6 @@ const HomePage = () => {
         </Button>
       </Stack>
     </Stack>
-  )
-}
-export default HomePage
+  );
+};
+export default HomePage;

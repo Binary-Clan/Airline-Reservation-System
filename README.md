@@ -230,7 +230,72 @@ In this setup, an API request is sent through the API Gateway to the FLIGHT-INFO
 
 ## User Interface
 
+### Implementation
+#### Frameworks, and Tools Used
+In the development of the Aero Express Airline Reservation System, we utilized a combination of modern frameworks and tools to create a seamless, efficient, and user-friendly interface. The following sections detail the implementation of the UI, along with the frameworks and tools employed.
 
+##### UI Implementation
+The User Interface (UI) of the Aero Express system was meticulously designed to ensure an intuitive and responsive user experience. The key aspects of our UI implementation included:
+
+- React: As the core framework for building the user interface, React was chosen for its component-based architecture, which promotes reusability and maintainability. React's virtual DOM enabled efficient updates and rendering, enhancing the overall performance of the application.
+- Material-UI: To create a visually appealing and consistent design, we integrated Material-UI, a popular React component library that adheres to Google's Material Design principles. Material-UI provided pre-built components like buttons, grids, text fields, and icons, which helped in rapidly developing a professional-looking interface.
+- Figma: The design and prototyping of the UI were accomplished using Figma. This collaborative design tool allowed our team to create detailed wireframes and prototypes, ensuring that the design aligned with user expectations and requirements. Figma's real-time collaboration features facilitated efficient feedback and iterations.
+
+##### Frameworks and Tools
+To enhance the functionality and maintainability of the Aero Express system, we leveraged several frameworks and tools:
+
+- Axios: For handling API requests, Axios was employed due to its simplicity and promise-based approach. Axios allowed us to easily fetch and send data to the server, manage request headers, and handle responses and errors effectively.
+- Tanstack Query: Formerly known as React Query, this library was used for data fetching, caching, and synchronization. Tanstack Query simplified the management of server state, providing hooks for queries and mutations, which facilitated efficient data handling and ensured that the UI was always in sync with the server data.
+- React Hot Toast: To improve user feedback and interaction, we integrated React Hot Toast for displaying notifications. This lightweight and customizable toast notification library helped us inform users about the success or failure of their actions, enhancing the overall user experience.
+- Material Icons: To enrich the visual appeal and improve the usability of the application, Material Icons were incorporated. These icons, provided by Google, are a part of the Material Design system and ensured that the icons used were consistent and visually appealing.
+
+
+#### User Flow
+![Demo mp4_snapshot_00 00 843](https://github.com/user-attachments/assets/3c8b66ad-9432-41ad-940d-a80276075cf1)
+*Home screen of the user*
+
+After logging in, users can navigate to their profile to update and edit their personal details. This feature ensures that user information is always up-to-date and accurate, enhancing personalized service and communication.
+![Demo mp4_snapshot_00 21 271](https://github.com/user-attachments/assets/52b2bbc7-90a4-40c5-8885-0ff414d266fa)
+*User profile edit interface*
+
+To book a flight, users can access the "Book a Flight" option. The process is intuitive and user-friendly, starting with browsing and searching through available flight schedules. The search functionality allows users to find flights that match their criteria easily.
+![Demo mp4_snapshot_00 31 281](https://github.com/user-attachments/assets/c1f1f946-09af-4b7f-94b0-48f84486aacb)
+*Available flight schedules interface*
+
+Once a suitable flight schedule is found, users can select it to view detailed information, including flight details, available seats, and remaining capacity.
+![Demo mp4_snapshot_00 56 306](https://github.com/user-attachments/assets/e9fba14f-e693-49c2-b678-a910fae13982)
+*Information about the flight schedule*
+
+Selecting preferred seats is straightforward, with clear visibility of seat availability. After choosing seats, users proceed to the checkout page where they can review the details of their selection. The interface also includes a search function to help users locate specific seats if needed. 
+![Demo mp4_snapshot_01 21 331](https://github.com/user-attachments/assets/d498f7a9-5e98-4850-9353-7c7af6940a00)
+*Information about the selected seats*
+
+In the payment interface, users enter their card details to finalize the booking, with the process being secure and straightforward. 
+![Demo mp4_snapshot_01 26 336](https://github.com/user-attachments/assets/f578578d-007a-4b59-8a96-cc62503254d4)
+*Payment interface*
+
+After a successful payment, users receive a confirmation message indicating that their booking is complete, providing assurance and clarity about their booking status.
+![Demo mp4_snapshot_01 46 356](https://github.com/user-attachments/assets/b92dcf93-c0e0-4483-98e5-6dab3619e620)
+*Payment successful interface*
+
+#### Admin Flow
+Admins, upon logging in, are greeted with the Admin Home dashboard. This central hub provides access to manage flights, schedules, and other admin users. Admins have comprehensive control over flight management, including the ability to add new flights to keep the schedule current, view detailed information about each flight for effective monitoring, update flight details to ensure accuracy, and delete flights that are no longer needed to keep the schedule relevant and uncluttered.
+![Demo mp4_snapshot_01 56 366](https://github.com/user-attachments/assets/6d79a10d-17d6-40c5-9809-e5c64bb83a6a)
+*Admin home interface*
+
+Managing flight schedules is another critical function for admins. They can add new schedules to accommodate changes in flight plans and customer demand, view existing schedules in detail for effective monitoring, update schedules to reflect any changes, and delete outdated or incorrect schedules to maintain the integrity of the information provided to users.
+![Demo mp4_snapshot_02 01 371](https://github.com/user-attachments/assets/8824cd4c-02dc-4c7c-abdd-e886dbbde756)
+*Flight management interface*
+
+![Demo mp4_snapshot_02 31 401](https://github.com/user-attachments/assets/5e7fa3e9-f4cd-435e-9a0d-99e73f0d256c)
+*Add new flight interface*
+
+![Demo mp4_snapshot_03 01 431](https://github.com/user-attachments/assets/019b3a7b-7a74-449c-89d7-afbf57dce262)
+*Add new schedule interface*
+
+Admins also have the capability to manage other admin users, ensuring effective delegation and oversight. They can add new admin users to expand administrative capabilities, view details about current admin users to monitor their activities and roles, and delete admin users as necessary to ensure that only authorized personnel have access to administrative functions.
+![Demo mp4_snapshot_03 26 456](https://github.com/user-attachments/assets/a3fb142b-182e-4a08-b41f-bb56a2732919)
+*Admin Management interface*
 
 ### API Testing Tools
 ![4](https://github.com/user-attachments/assets/c88dda74-f348-4c26-b70b-58b5dad3e394)

@@ -66,7 +66,24 @@ Each microservice has its own PostgreSQL database, ensuring data separation and 
 ## Architectural Diagram
 ![Architecture](https://github.com/user-attachments/assets/603b26a8-30ce-4ac9-8b9c-b53bf500ca17)
 
+## Design Decisions
+
+The decision to split the airline reservation system into multiple microservices was driven by the need for scalability, maintainability, and flexibility. This decomposition allows each service to be developed, deployed, and scaled independently, enhancing the system's overall robustness. The Frontend Service acts as the user interface, interacting with backend services through the API Gateway, ensuring seamless user experiences for searching flights, making reservations, and viewing bookings. 
+
+The Flight Information Service manages and provides flight data, ensuring up-to-date flight details are available for search and booking, and can be scaled to handle high loads efficiently. The Reservation Service handles booking operations, maintaining data integrity and consistency, and can be optimized for peak booking periods. The Reservation Viewer Service allows users to view and manage reservations, providing easy access to booking information and ensuring responsive performance. Each microservice contributes to a modular and scalable architecture, with the API Gateway offering a unified entry point, managing routing, security, and request aggregation. This design ensures the system can evolve with changing requirements, handle varying loads, and be maintained with minimal disruption, ultimately enhancing the reliability and performance of the airline reservation system.
+
 ## Microservices
+
+### Implementaion Methods
+
+The implementation of the microservices for the airline reservation system primarily utilized Spring Boot and Netflix Eureka. Each microservice, including the frontend service, flight information service, reservation service, and reservation viewer service, was developed using Spring Boot, which facilitated rapid development and deployment.
+
+Netflix Eureka served as the service registry, where each microservice registered itself upon startup. This enabled the API Gateway to discover and route requests dynamically to the appropriate service instances. The service discovery mechanism provided by Eureka ensured that the microservices could scale independently and handle failover efficiently, as it automatically updated the registry with the available instances of each service.
+
+For load balancing, Spring Cloud Load Balancer was used. This approach distributed incoming requests evenly across the available service instances registered with Eureka, ensuring efficient utilization of resources and improving the system's responsiveness and reliability. By leveraging Spring's built-in load balancing capabilities, we avoided the complexity of integrating additional tools like Netflix Ribbon.
+
+This implementation method, combining Netflix Eureka for service discovery and Spring Cloud Load Balancer for load balancing, provided an effective solution for managing the microservices in the airline reservation system. This setup allowed for independent scaling, ensuring the system could handle the demands of a dynamic and high-traffic application while maintaining simplicity and ease of management.
+
 
 ### Core Services
 
@@ -196,6 +213,7 @@ Each microservice has its own PostgreSQL database, ensuring data separation and 
 
 ## Discovery Server
 ![Service_Registry](https://github.com/user-attachments/assets/ec6adb78-9081-4975-a7e3-0fbb067e5145)
+
 Service discovery is a key component in microservices architecture, enabling services to dynamically find and communicate with each other. This mechanism ensures that each service can discover the network locations of other services, facilitating seamless interaction. Using tools like Spring Cloud Eureka, services can register themselves at runtime, updating their instances in a centralized registry. This registry maintains the current locations of all services, providing clients with the necessary information to call other services without hardcoding their addresses.
 
 In this project, we have four microservices running as Eureka clients, each registered with the Eureka server as shown in the image. The Flight-Information-Service provides flight details, while the Frontend-Service handles the user interface, enabling users to interact with the system. The Reservation-Service manages booking details and communicates with the Reservation-Viewer-Service, which allows users to view their reservations. These services register with Eureka, ensuring they can be dynamically discovered and scaled, enhancing the robustness and flexibility of the application. To implement the Service discovery, we created a new microservice “service-registry”. This has the dependency of Eureka Server in the pom.xml file. Other microservices were registered as Eureka clients by defining related dependencies in them. This slide shows how our services has registered as instances. in the Eureka server. This helps to direct API requests to the correct service without hardcoding their service URLs.
@@ -212,6 +230,12 @@ In this setup, an API request is sent through the API Gateway to the FLIGHT-INFO
 
 ## User Interface
 
+
+
+### API Testing Tools
+![4](https://github.com/user-attachments/assets/c88dda74-f348-4c26-b70b-58b5dad3e394)
+
+API testing tools like Postman were essential in testing the application's APIs to ensure they functioned correctly and met the requirements. Postman was used to send requests to various endpoints exposed by the microservices, such as the flight information service, reservation service, and reservation viewer service, through the API Gateway. It allowed for the verification of request and response formats, ensuring that the APIs returned the expected data. Postman's features, such as automated testing scripts and environment variables, facilitated efficient testing across different scenarios and environments. By using Postman, we were able to validate the behavior of each microservice independently, ensuring they communicated correctly through the API Gateway and delivered the expected results to the frontend. This rigorous testing process helped identify and fix issues early, ensuring the reliability and performance of the airline reservation system.
 
 
 

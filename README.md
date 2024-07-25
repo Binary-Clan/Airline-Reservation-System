@@ -203,10 +203,12 @@ In this project, we have four microservices running as Eureka clients, each regi
 ## API Gateway
 ![2 (1)](https://github.com/user-attachments/assets/b99dcabf-dfc2-47c7-bc91-438aac1b509c)
 
-Next, we have the API Gateway, implemented with Spring Cloud. The API Gateway acts as a single entry point for all client requests. It routes these requests to the appropriate backend services, handles load balancing, and provides security features.
+API Gateway acts as a reverse proxy, providing a single entry point for all client requests to our microservices-based airline reservation system. It routes requests to the appropriate services—frontend, flight information, reservation, and reservation viewer—ensuring simplified client interaction and consistent request handling. The gateway enforces security policies, including authentication and authorization, and implements rate limiting to protect against abuse. It also manages service discovery and load balancing, ensuring high availability and reliability. Centralized logging and monitoring aid in performance optimization and debugging. By transforming and aggregating requests and responses, the API Gateway enhances efficiency and reduces client-side complexity, making it an essential component of our system's architecture.
 
 ![4](https://github.com/user-attachments/assets/d5f27af5-3135-40a5-8c19-0c54ee098305)
-Our API Gateway is a crucial component that manages and routes client requests to various backend services. It leverages Netflix Eureka for service discovery, allowing it to dynamically locate services and route traffic accordingly.
+
+In this setup, an API request is sent through the API Gateway to the FLIGHT-INFORMATION-SERVICE. The service is registered on the Eureka server, which acts as a service registry. When a client sends a request to the API Gateway at http://localhost:8765/FLIGHT-INFORMATION-SERVICE/airline_reservation/api/flights, the gateway uses the service discovery mechanism to locate the FLIGHT-INFORMATION-SERVICE from Eureka. It then forwards the request to the appropriate instance of the flight information service. The gateway dynamically routes the request based on the service name, and the flight information service processes the request and returns the response. This setup simplifies client interactions by providing a single access point, handles service discovery and routing, and ensures that the client doesn't need to know the actual locations of the microservices.
+
 
 ## User Interface
 

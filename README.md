@@ -1,4 +1,6 @@
-![2 (2)](https://github.com/user-attachments/assets/2800843b-19c4-475b-93d9-c94c7e92fd0f)# ✈️Air-Line Reservation System
+![Screenshot 2024-07-25 092142](https://github.com/user-attachments/assets/53cae6e6-c2f5-4a24-a05d-9bc0a801d434)
+
+Air-Line Reservation System
 
 A distributed microservice architecture is designed to enable efficient airline operations, including booking and viewing tickets🎟️, as well as checking flight schedules✅, to accommodate high traffic volumes🚦. This system ensures scalability, reliability, and seamless user experiences across all functionalities.🛠️
 
@@ -64,25 +66,7 @@ Each microservice has its own PostgreSQL database, ensuring data separation and 
 ## Architectural Diagram
 ![Architecture](https://github.com/user-attachments/assets/603b26a8-30ce-4ac9-8b9c-b53bf500ca17)
 
-**Structure:**
-- Diagram representing the microservices architecture
-- Explanation of the main components: services, API gateway, discovery server, database
-
-
 ## Microservices
-
-#### Introduction to the Netflix OSS Stack
-For our Airline Reservation System, we utilized several components from the Netflix OSS (Open Source Software) stack to ensure a robust, scalable, and resilient microservices architecture. The tools we used include:
-- **Eureka**: A service registry for service discovery, allowing microservices to find each other.
-- **Ribbon**: A client-side load balancer that distributes the load among multiple instances of a microservice.
-- **Hystrix**: A latency and fault tolerance library designed to isolate points of access to remote systems, services, and 3rd-party libraries.
-- **Zuul**: An edge service that provides dynamic routing, monitoring, resiliency, security, and more.
-
-#### Explanation of Why These Tools Were Chosen
-- **Eureka**: Simplifies service discovery and registration, making the system more dynamic and scalable.
-- **Ribbon**: Provides efficient client-side load balancing, improving response times and system reliability.
-- **Hystrix**: Ensures system resilience by preventing cascading failures and providing fallback options during service disruptions.
-- **Zuul**: Acts as a gateway for routing requests, enhancing security and allowing for centralized monitoring and management.
 
 ### Core Services
 
@@ -226,26 +210,14 @@ Our API Gateway is a crucial component that manages and routes client requests t
 
 ## User Interface
 
-### Implementation Details
-Describe the implementation of the UI, the frameworks, and tools used.
 
-**Structure:**
-- Overview of the frontend framework (e.g., React, Angular)
-- Tools and libraries used
-- User interface design principles
 
-### API Testing Tools
-Explain how API testing tools (e.g., Postman) were used to test the application's APIs.
-
-**Structure:**
-- Introduction to API testing tools
-- Description of test cases and scenarios
-- Continuous integration and automated testing practices
 
 ## Deployment
-![Uploading 2 (2).png…]()
 
 Our application consists of five microservices and four databases, resulting in a total of nine Docker containers. Each component plays a crucial role in ensuring that our system operates smoothly and efficiently.
+
+![2 (2)](https://github.com/user-attachments/assets/2800843b-19c4-475b-93d9-c94c7e92fd0f)
 
 ### Microservices Containers:
 
@@ -263,6 +235,7 @@ Our application consists of five microservices and four databases, resulting in 
 - **Flight Information Database**: Manages flight-related data accessed by the flight information service, PostgreSQL.
 
 ### Deployment on Cloud Services
+![3](https://github.com/user-attachments/assets/2c0ed0d5-2b62-4d8e-ba0d-3b1a621188d8)
 
 Currently, our Docker containers are running locally. We plan to deploy them on cloud services to benefit from greater scalability and reliability, while being mindful of the cost implications.
 
